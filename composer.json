@@ -1,0 +1,57 @@
+{
+    "name": "leomachado/permissions",
+    "description": "Control of Modules and Permissions of modules",
+    "keywords": [
+        "laravel",
+        "modules",
+        "permission",
+        "acl",
+        "security",
+        "leomachado"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Leonardo Machado",
+            "email": "leo94.machado@gmail.com"
+        }
+    ],
+    "require": {
+        "php" : ">=7.0",
+        "illuminate/auth": "~5.3.0|~5.4.0|~5.5.0|~5.6.0|~5.7.0",
+        "illuminate/container": "~5.3.0|~5.4.0|~5.5.0|~5.6.0|~5.7.0",
+        "illuminate/contracts": "~5.3.0|~5.4.0|~5.5.0|~5.6.0|~5.7.0",
+        "illuminate/database": "~5.4.0|~5.5.0|~5.6.0|~5.7.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.4.2|~3.5.0|~3.6.0|~3.7.0",
+        "phpunit/phpunit": "^5.7|6.2|^7.0",
+        "predis/predis": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spatie\\Permission\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Spatie\\Permission\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spatie\\Permission\\PermissionServiceProvider"
+            ]
+        }
+    }
+}
