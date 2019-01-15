@@ -1,6 +1,7 @@
 {
     "name": "LeoMachado94/modules-permissions",
     "description": "Control of Modules and Permissions of modules",
+    "version": "master",
     "keywords": [
         "laravel",
         "modules",
