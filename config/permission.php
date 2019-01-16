@@ -60,7 +60,7 @@ return [
          * basic default value but you may easily change it to any table you like.
          */
 
-        'model_has_roles' => 'model_has_modules',
+        'model_has_modules' => 'model_has_modules',
 
         /*
          * When using the "HasModules" trait from this package, we need to know which
@@ -105,7 +105,7 @@ return [
          * The key to use when tagging and prefixing entries in the cache.
          */
 
-        'key' => 'spatie.permission.cache',
+        'key' => 'leomachado.permission.cache',
 
         /*
          * When checking for a permission against a model by passing a Permission
