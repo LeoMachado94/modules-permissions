@@ -58,7 +58,7 @@ class CreatePermissionTables extends Migration
                 ->on($tableNames['modules'])
                 ->onDelete('cascade');
 
-            $table->primary(['module_id', $columnNames['model_morph_key'], 'model_type'],
+            $table->primary(['role_id', $columnNames['model_morph_key'], 'model_type'],
                     'model_has_modules_module_model_type_primary');
         });
 
@@ -93,7 +93,7 @@ class CreatePermissionTables extends Migration
     {
         $tableNames = config('permission.table_names');
 
-        Schema::drop($tableNames['module_has_permissions']);
+        Schema::drop($tableNames['role_has_permissions']);
         Schema::drop($tableNames['model_has_modules']);
         Schema::drop($tableNames['model_has_permissions']);
         Schema::drop($tableNames['modules']);
