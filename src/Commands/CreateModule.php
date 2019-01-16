@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Permission\Commands;
+namespace LeoMachado\Permission\Commands;
 
 use Illuminate\Console\Command;
-use Spatie\Permission\Contracts\Module as ModuleContract;
-use Spatie\Permission\Contracts\Permission as PermissionContract;
+use LeoMachado\Permission\Contracts\Module as ModuleContract;
+use LeoMachado\Permission\Contracts\Permission as PermissionContract;
 
 class CreateModule extends Command
 {
@@ -23,7 +23,7 @@ class CreateModule extends Command
 
         $module->givePermissionTo($this->makePermissions($this->argument('permissions')));
 
-        $this->info("Role `{$module->name}` created");
+        $this->info("Module `{$module->name}` created");
     }
 
     protected function makePermissions($string = null)

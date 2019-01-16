@@ -1,8 +1,8 @@
 <?php
 
-namespace Spatie\Permission\Traits;
+namespace LeoMachado\Permission\Traits;
 
-use Spatie\Permission\PermissionRegistrar;
+use LeoMachado\Permission\PermissionRegistrar;
 
 trait RefreshesPermissionCache
 {

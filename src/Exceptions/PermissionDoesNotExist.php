@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Permission\Exceptions;
+namespace LeoMachado\Permission\Exceptions;
 
 use InvalidArgumentException;
 

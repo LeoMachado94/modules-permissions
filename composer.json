@@ -8,7 +8,7 @@
         "permission",
         "acl",
         "security",
-        "leomachado"
+        "leomachado94"
     ],
     "license": "MIT",
     "authors": [
@@ -31,7 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Permission\\": "src"
+            "LeoMachado\\Permission\\": "src"
         },
         "files": [
             "src/helpers.php"
@@ -39,7 +39,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Permission\\Test\\": "tests"
+            "LeoMachado\\Permission\\Test\\": "tests"
         }
     },
     "scripts": {
@@ -51,7 +51,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\Permission\\PermissionServiceProvider"
+                "LeoMachado\\Permission\\PermissionServiceProvider"
             ]
         }
     }

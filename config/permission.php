@@ -10,29 +10,29 @@ return [
          * is often just the "Permission" model but you may use whatever you like.
          *
          * The model you want to use as a Permission model needs to implement the
-         * `Spatie\Permission\Contracts\Permission` contract.
+         * `LeoMachado\Permission\Contracts\Permission` contract.
          */
 
-        'permission' => Spatie\Permission\Models\Permission::class,
+        'permission' => LeoMachado\Permission\Models\Permission::class,
 
         /*
-         * When using the "HasRoles" trait from this package, we need to know which
+         * When using the "HasModules" trait from this package, we need to know which
          * Eloquent model should be used to retrieve your roles. Of course, it
-         * is often just the "Role" model but you may use whatever you like.
+         * is often just the "Module" model but you may use whatever you like.
          *
-         * The model you want to use as a Role model needs to implement the
-         * `Spatie\Permission\Contracts\Role` contract.
+         * The model you want to use as a Module model needs to implement the
+         * `LeoMachado\Permission\Contracts\Module` contract.
          */
 
-        'module' => Spatie\Permission\Models\Module::class,
+        'module' => LeoMachado\Permission\Models\Module::class,
 
     ],
 
     'table_names' => [
 
         /*
-         * When using the "HasRoles" trait from this package, we need to know which
-         * table should be used to retrieve your roles. We have chosen a basic
+         * When using the "HasModules" trait from this package, we need to know which
+         * table should be used to retrieve your modules. We have chosen a basic
          * default value but you may easily change it to any table you like.
          */
 
@@ -55,16 +55,16 @@ return [
         'model_has_permissions' => 'model_has_permissions',
 
         /*
-         * When using the "HasRoles" trait from this package, we need to know which
-         * table should be used to retrieve your models roles. We have chosen a
+         * When using the "HasModules" trait from this package, we need to know which
+         * table should be used to retrieve your models modules. We have chosen a
          * basic default value but you may easily change it to any table you like.
          */
 
-        'model_has_roles' => 'model_has_roles',
+        'model_has_roles' => 'model_has_modules',
 
         /*
-         * When using the "HasRoles" trait from this package, we need to know which
-         * table should be used to retrieve your roles permissions. We have chosen a
+         * When using the "HasModules" trait from this package, we need to know which
+         * table should be used to retrieve your modules permissions. We have chosen a
          * basic default value but you may easily change it to any table you like.
          */
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Spatie\Permission\Traits;
+namespace LeoMachado\Permission\Traits;
 
-use Spatie\Permission\Guard;
+use LeoMachado\Permission\Guard;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
-use Spatie\Permission\PermissionRegistrar;
-use Spatie\Permission\Contracts\Permission;
-use Spatie\Permission\Exceptions\GuardDoesNotMatch;
+use LeoMachado\Permission\PermissionRegistrar;
+use LeoMachado\Permission\Contracts\Permission;
+use LeoMachado\Permission\Exceptions\GuardDoesNotMatch;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Spatie\Permission\Exceptions\PermissionDoesNotExist;
+use LeoMachado\Permission\Exceptions\PermissionDoesNotExist;
 
 trait HasPermissions
 {
@@ -53,7 +53,7 @@ trait HasPermissions
      * Scope the model query to certain permissions only.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string|array|\Spatie\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
+     * @param string|array|\LeoMachado\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -61,11 +61,11 @@ trait HasPermissions
     {
         $permissions = $this->convertToPermissionModels($permissions);
 
-        $rolesWithPermissions = array_unique(array_reduce($permissions, function ($result, $permission) {
-            return array_merge($result, $permission->roles->all());
+        $modulesWithPermissions = array_unique(array_reduce($permissions, function ($result, $permission) {
+            return array_merge($result, $permission->modules->all());
         }, []));
 
-        return $query->where(function ($query) use ($permissions, $rolesWithPermissions) {
+        return $query->where(function ($query) use ($permissions, $modulesWithPermissions) {
             $query->whereHas('permissions', function ($query) use ($permissions) {
                 $query->where(function ($query) use ($permissions) {
                     foreach ($permissions as $permission) {
@@ -73,11 +73,11 @@ trait HasPermissions
                     }
                 });
             });
-            if (count($rolesWithPermissions) > 0) {
-                $query->orWhereHas('roles', function ($query) use ($rolesWithPermissions) {
-                    $query->where(function ($query) use ($rolesWithPermissions) {
-                        foreach ($rolesWithPermissions as $role) {
-                            $query->orWhere(config('permission.table_names.roles').'.id', $role->id);
+            if (count($modulesWithPermissions) > 0) {
+                $query->orWhereHas('modules', function ($query) use ($modulesWithPermissions) {
+                    $query->where(function ($query) use ($modulesWithPermissions) {
+                        foreach ($modulesWithPermissions as $module) {
+                            $query->orWhere(config('permission.table_names.modules').'.id', $module->id);
                         }
                     });
                 });
@@ -86,7 +86,7 @@ trait HasPermissions
     }
 
     /**
-     * @param string|array|\Spatie\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
+     * @param string|array|\LeoMachado\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
      *
      * @return array
      */
@@ -110,7 +110,7 @@ trait HasPermissions
     /**
      * Determine if the model may perform the given permission.
      *
-     * @param string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param string|int|\LeoMachado\Permission\Contracts\Permission $permission
      * @param string|null $guardName
      *
      * @return bool
@@ -168,13 +168,13 @@ trait HasPermissions
             throw new PermissionDoesNotExist;
         }
 
-        return $this->hasDirectPermission($permission) || $this->hasPermissionViaRole($permission);
+        return $this->hasDirectPermission($permission) || $this->hasPermissionViaModule($permission);
     }
 
     /**
      * An alias to hasPermissionTo(), but avoids throwing an exception.
      *
-     * @param string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param string|int|\LeoMachado\Permission\Contracts\Permission $permission
      * @param string|null $guardName
      *
      * @return bool
@@ -193,7 +193,7 @@ trait HasPermissions
     /**
      * Construct the key for the cache entry.
      *
-     * @param null|string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param null|string|int|\LeoMachado\Permission\Contracts\Permission $permission
      *
      * @return string
      */
@@ -211,7 +211,7 @@ trait HasPermissions
     /**
      * Construct the tags for the cache entry.
      *
-     * @param null|string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param null|string|int|\LeoMachado\Permission\Contracts\Permission $permission
      *
      * @return array
      */
@@ -242,7 +242,7 @@ trait HasPermissions
     /**
      * Get the key to cache the permission by.
      *
-     * @param string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param string|int|\LeoMachado\Permission\Contracts\Permission $permission
      *
      * @return mixed
      */
@@ -302,21 +302,21 @@ trait HasPermissions
     }
 
     /**
-     * Determine if the model has, via roles, the given permission.
+     * Determine if the model has, via modules, the given permission.
      *
-     * @param \Spatie\Permission\Contracts\Permission $permission
+     * @param \LeoMachado\Permission\Contracts\Permission $permission
      *
      * @return bool
      */
-    protected function hasPermissionViaRole(Permission $permission): bool
+    protected function hasPermissionViaModule(Permission $permission): bool
     {
-        return $this->hasRole($permission->roles);
+        return $this->hasModule($permission->modules);
     }
 
     /**
      * Determine if the model has the given permission.
      *
-     * @param string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param string|int|\LeoMachado\Permission\Contracts\Permission $permission
      *
      * @return bool
      */
@@ -346,18 +346,18 @@ trait HasPermissions
     }
 
     /**
-     * Return all the permissions the model has via roles.
+     * Return all the permissions the model has via modules.
      */
-    public function getPermissionsViaRoles(): Collection
+    public function getPermissionsViaModules(): Collection
     {
-        return $this->load('roles', 'roles.permissions')
-            ->roles->flatMap(function ($role) {
-                return $role->permissions;
+        return $this->load('modules', 'modules.permissions')
+            ->modules->flatMap(function ($module) {
+                return $module->permissions;
             })->sort()->values();
     }
 
     /**
-     * Return all the permissions the model has, both directly and via roles.
+     * Return all the permissions the model has, both directly and via modules.
      *
      * @throws \Exception
      */
@@ -366,8 +366,8 @@ trait HasPermissions
         $functionGetAllPermissions = function () {
             $permissions = $this->permissions;
 
-            if ($this->roles) {
-                $permissions = $permissions->merge($this->getPermissionsViaRoles());
+            if ($this->modules) {
+                $permissions = $permissions->merge($this->getPermissionsViaModules());
             }
 
             return $permissions->sort()->values();
@@ -388,9 +388,9 @@ trait HasPermissions
     }
 
     /**
-     * Grant the given permission(s) to a role.
+     * Grant the given permission(s) to a module.
      *
-     * @param string|array|\Spatie\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
+     * @param string|array|\LeoMachado\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
      *
      * @return $this
      */
@@ -438,7 +438,7 @@ trait HasPermissions
     /**
      * Remove all current permissions and set the given ones.
      *
-     * @param string|array|\Spatie\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
+     * @param string|array|\LeoMachado\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
      *
      * @return $this
      */
@@ -452,7 +452,7 @@ trait HasPermissions
     /**
      * Revoke the given permission.
      *
-     * @param \Spatie\Permission\Contracts\Permission|\Spatie\Permission\Contracts\Permission[]|string|string[] $permission
+     * @param \LeoMachado\Permission\Contracts\Permission|\LeoMachado\Permission\Contracts\Permission[]|string|string[] $permission
      *
      * @return $this
      */
@@ -468,9 +468,9 @@ trait HasPermissions
     }
 
     /**
-     * @param string|array|\Spatie\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
+     * @param string|array|\LeoMachado\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
      *
-     * @return \Spatie\Permission\Contracts\Permission|\Spatie\Permission\Contracts\Permission[]|\Illuminate\Support\Collection
+     * @return \LeoMachado\Permission\Contracts\Permission|\LeoMachado\Permission\Contracts\Permission[]|\Illuminate\Support\Collection
      */
     protected function getStoredPermission($permissions)
     {
@@ -495,14 +495,14 @@ trait HasPermissions
     }
 
     /**
-     * @param \Spatie\Permission\Contracts\Permission|\Spatie\Permission\Contracts\Role $roleOrPermission
+     * @param \LeoMachado\Permission\Contracts\Permission|\LeoMachado\Permission\Contracts\Module $moduleOrPermission
      *
-     * @throws \Spatie\Permission\Exceptions\GuardDoesNotMatch
+     * @throws \LeoMachado\Permission\Exceptions\GuardDoesNotMatch
      */
-    protected function ensureModelSharesGuard($roleOrPermission)
+    protected function ensureModelSharesGuard($moduleOrPermission)
     {
-        if (! $this->getGuardNames()->contains($roleOrPermission->guard_name)) {
-            throw GuardDoesNotMatch::create($roleOrPermission->guard_name, $this->getGuardNames());
+        if (! $this->getGuardNames()->contains($moduleOrPermission->guard_name)) {
+            throw GuardDoesNotMatch::create($moduleOrPermission->guard_name, $this->getGuardNames());
         }
     }
 

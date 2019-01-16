@@ -1,15 +1,15 @@
 <?php
 
-namespace Spatie\Permission\Models;
+namespace LeoMachado\Permission\Models;
 
-use Spatie\Permission\Guard;
+use LeoMachado\Permission\Guard;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Traits\HasPermissions;
-use Spatie\Permission\Exceptions\ModuleDoesNotExist;
-use Spatie\Permission\Exceptions\GuardDoesNotMatch;
-use Spatie\Permission\Exceptions\ModuleAlreadyExists;
-use Spatie\Permission\Contracts\Module as ModuleContract;
-use Spatie\Permission\Traits\RefreshesPermissionCache;
+use LeoMachado\Permission\Traits\HasPermissions;
+use LeoMachado\Permission\Exceptions\ModuleDoesNotExist;
+use LeoMachado\Permission\Exceptions\GuardDoesNotMatch;
+use LeoMachado\Permission\Exceptions\ModuleAlreadyExists;
+use LeoMachado\Permission\Contracts\Module as ModuleContract;
+use LeoMachado\Permission\Traits\RefreshesPermissionCache;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -70,14 +70,14 @@ class Module extends Model implements ModuleContract
     }
 
     /**
-     * Find a role by its name and guard name.
+     * Find a module by its name and guard name.
      *
      * @param string $name
      * @param string|null $guardName
      *
-     * @return \Spatie\Permission\Contracts\Module|\Spatie\Permission\Models\Module
+     * @return \LeoMachado\Permission\Contracts\Module|\LeoMachado\Permission\Models\Module
      *
-     * @throws \Spatie\Permission\Exceptions\ModuleDoesNotExist
+     * @throws \LeoMachado\Permission\Exceptions\ModuleDoesNotExist
      */
     public static function findByName(string $name, $guardName = null): ModuleContract
     {
@@ -86,7 +86,7 @@ class Module extends Model implements ModuleContract
         $module = static::where('name', $name)->where('guard_name', $guardName)->first();
 
         if (! $module) {
-            throw RoleDoesNotExist::named($name);
+            throw ModuleDoesNotExist::named($name);
         }
 
         return $module;
@@ -99,19 +99,19 @@ class Module extends Model implements ModuleContract
         $module = static::where('id', $id)->where('guard_name', $guardName)->first();
 
         if (! $module) {
-            throw RoleDoesNotExist::withId($id);
+            throw ModuleDoesNotExist::withId($id);
         }
 
         return $module;
     }
 
     /**
-     * Find or create role by its name (and optionally guardName).
+     * Find or create module by its name (and optionally guardName).
      *
      * @param string $name
      * @param string|null $guardName
      *
-     * @return \Spatie\Permission\Contracts\Module
+     * @return \LeoMachado\Permission\Contracts\Module
      */
     public static function findOrCreate(string $name, $guardName = null): ModuleContract
     {
@@ -133,7 +133,7 @@ class Module extends Model implements ModuleContract
      *
      * @return bool
      *
-     * @throws \Spatie\Permission\Exceptions\GuardDoesNotMatch
+     * @throws \LeoMachado\Permission\Exceptions\GuardDoesNotMatch
      */
     public function hasPermissionTo($permission): bool
     {

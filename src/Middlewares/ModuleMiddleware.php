@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\Permission\Middlewares;
+namespace LeoMachado\Permission\Middlewares;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Exceptions\UnauthorizedException;
+use LeoMachado\Permission\Exceptions\UnauthorizedException;
 
 class ModuleMiddleware
 {

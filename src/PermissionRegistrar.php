@@ -1,14 +1,14 @@
 <?php
 
-namespace Spatie\Permission;
+namespace LeoMachado\Permission;
 
 use Illuminate\Cache\CacheManager;
 use Illuminate\Support\Collection;
-use Spatie\Permission\Contracts\Module;
+use LeoMachado\Permission\Contracts\Module;
 use Illuminate\Contracts\Auth\Access\Gate;
-use Spatie\Permission\Contracts\Permission;
+use LeoMachado\Permission\Contracts\Permission;
 use Illuminate\Contracts\Auth\Access\Authorizable;
-use Spatie\Permission\Exceptions\PermissionDoesNotExist;
+use LeoMachado\Permission\Exceptions\PermissionDoesNotExist;
 
 class PermissionRegistrar
 {
@@ -160,7 +160,7 @@ class PermissionRegistrar
     /**
      * Get an instance of the permission class.
      *
-     * @return \Spatie\Permission\Contracts\Permission
+     * @return \LeoMachado\Permission\Contracts\Permission
      */
     public function getPermissionClass(): Permission
     {
@@ -170,7 +170,7 @@ class PermissionRegistrar
     /**
      * Get an instance of the module class.
      *
-     * @return \Spatie\Permission\Contracts\Module
+     * @return \LeoMachado\Permission\Contracts\Module
      */
     public function getModuleClass(): Module
     {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Spatie\Permission\Contracts;
+namespace LeoMachado\Permission\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 interface Permission
 {
     /**
-     * A permission can be applied to roles.
+     * A permission can be applied to modules.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -19,7 +19,7 @@ interface Permission
      * @param string $name
      * @param string|null $guardName
      *
-     * @throws \Spatie\Permission\Exceptions\PermissionDoesNotExist
+     * @throws \LeoMachado\Permission\Exceptions\PermissionDoesNotExist
      *
      * @return Permission
      */
@@ -31,7 +31,7 @@ interface Permission
      * @param int $id
      * @param string|null $guardName
      *
-     * @throws \Spatie\Permission\Exceptions\PermissionDoesNotExist
+     * @throws \LeoMachado\Permission\Exceptions\PermissionDoesNotExist
      *
      * @return Permission
      */

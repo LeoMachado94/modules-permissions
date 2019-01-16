@@ -1,14 +1,14 @@
 <?php
 
-namespace Spatie\Permission;
+namespace LeoMachado\Permission;
 
 use Illuminate\Routing\Route;
 use Illuminate\Support\Collection;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Spatie\Permission\Contracts\Module as ModuleContract;
-use Spatie\Permission\Contracts\Permission as PermissionContract;
+use LeoMachado\Permission\Contracts\Module as ModuleContract;
+use LeoMachado\Permission\Contracts\Permission as PermissionContract;
 
 class PermissionServiceProvider extends ServiceProvider
 {
